@@ -1,3 +1,7 @@
+## Отдельный футуристический итог 2031–2041 (5–15 лет)
+
+**[КОНСИЛИУМ: 13 перспективных банковских возможностей будущего](FUTURES_CONSILIUM_FINAL_2031_2041.md)** — второй отдельный результат, после 20+20 генераций и финансово-правовой критики GPT-6. [Длинный список 22 направлений](FUTURES_CONSILIUM_2031_2041.md), [ещё один frontier-проход с 17 идеями](FRONTIER_2031_2041_CONSILIUM.md) и [обсуждение #37](https://github.com/Podtverzhdeno/Research-Agents/issues/37). Это **не** замена исходному 54-ФБС/40–3–11 и **не** банковское инвестиционное согласование.
+
 **Полная предметная проработка всех ФБС:** [FBS_ALL_54_FULL_DECISIONS.md](FBS_ALL_54_FULL_DECISIONS.md) — **54 CJM и решения** с клиентской и банковской ценностью, ограничениями и метриками; [CSV для HTML и таблиц](FBS_FULL_54/FBS_ALL_54_SOURCE_AND_DECISION.csv). Подробные разделы: [2–3](FBS_FULL_54/SYSTEMS_2_3_CLIENT_AND_CHANNELS.md), [4](FBS_FULL_54/SYSTEM_4_PRODUCTS_PAYMENTS.md), [5–6](FBS_FULL_54/SYSTEMS_5_6_TECH_AND_DATA.md), [7](FBS_FULL_54/SYSTEM_7_BANK_OPERATIONS.md). Исходные 40/3/11 неизменны; это построчная работа, не новый инвестиционный approval.
 
 **Готовая полная карта:** [FBS_54_READY_TO_IMPORT.md](FBS_54_READY_TO_IMPORT.md) — 54 короткие формулировки для обновления HTML; [FBS_54_ACTIONABLE_COMPLETION.md](FBS_54_ACTIONABLE_COMPLETION.md) — 54 подробные карточки с CJM, метриками и ограничениями. 40/3/11 сохранены; любые смены типа требуют решения владельца.
