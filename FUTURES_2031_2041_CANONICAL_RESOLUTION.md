@@ -87,3 +87,41 @@
 | Независимый консенсус получен? | **Нет:** самостоятельных внешних подтверждений нет | Письменные заключения Legal, Credit Risk, FBS Owner, Product Finance, Ops/Security |
 
 **Итог:** редакционные вопросы и выбор идей закрыты для версии **2031–2041 / V1**; банковские validation gates честно остаются **не пройдены**. Новые первоисточники/возражения → новая версия, а не незаметное изменение согласованной исследовательской истории.
+
+
+## IV. Сведение расширенного X01–X18 — закрытие последнего конфликта редакций
+
+**Единственная используемая продуктовая нумерация финального shortlist — V01–V13.** Отдельный [18-тематический critical synthesis X01–X18](FUTURE_2031_2041_CANONICAL_RESOLUTION.md) сохраняет дополнительные альтернативы и отрицательные проверки, но **не создаёт 18 утверждённых новых продуктов**. Номера R01–R14 из Round8 существовали внутри отдельной ветки и **не соответствуют X01–X18**.
+
+| Расширенная идея X | Решение по основному V-shortlist | Почему |
+|---|---|---|
+| X01 DealOS | **V01** | Одна оркестрация сделки; раздельные договоры кредита, гарантии, escrow и расчёта |
+| X02 Cargo-to-Credit | **V03 / V08 / credit OUTSIDE_54** | Проверка факта и финансирование не один и тот же продукт; особое внимание к second-life asset |
+| X03 Contingency Finance | **V02** | Конкретный запасной юридический продукт при срыве, не самовольный перевод старой гарантии |
+| X04 Trade DvP | **V13** | eBL title и final payment, требуется признанная правовая схема/оператор |
+| X05 Collateral Mobility + cash | **V04** | Токен сам по себе уже не прорыв после запуска DTCC |
+| X06 Machine bank RFQ | **V11** | Дистрибуция может снижать банковский spread |
+| X07 Agent Authority Envelope | **V12** | Мандаты, доверенная среда и отзыв |
+| X08 Private trade + compliance proofs | **V03 + V05** | Достоверность исходного факта и compliance attestation разделены |
+| X09 Outcome Guarantee | **APPENDIX / CONDITIONALLY EXPLORE** | Ст. 368(4) и обычные performance guarantees — baseline, нет доказанной отдельной premium модели |
+| X10 Liquidity Router | **V07** | Только доступные легальные межвалютные рельсы и fallback |
+| X11 Streaming Machine Settlement | **V10** | Существуют machine payments; только low-cost corporate accounting может дать допценность |
+| X12 Agent Herd Firewall | **V06** | Risk control, не отдельная комиссионная ставка |
+| X13 Tokenised covenants | **V09** | Реальная эмиссия финансовых инструментов, не credit/factoring |
+| X14 Private Claim Check | **APPENDIX / NETWORK WATCH** | Singapore TFR уже существует; для новых сетей неизвестна полнота данных и право выдачи |
+| X15 Quantum-safe Trust | **V12 как устойчивость / ENABLER** | Обязательный жизненный цикл подписей/мандатов, не уникальная платная услуга |
+| X16 Agent Error Cover | **APPENDIX / WATCH** | Требует страховой лицензии/партнёра и цены коррелированного модельного ущерба |
+| X17 Multilateral Netting | **REJECT** | Отсутствует законный общий клиринг/дефолтный waterfall; банковские платёжные ФБС не дают права зачёта |
+| X18 Verified Impact Finance | **APPENDIX / WATCH** | Возможная ниша project finance, но independent KPI и лучший baseline не доказаны |
+
+**Что не теряем из parallel Round8:** промышленное **финансирование второй жизни актива** остаётся V08; machine-readable issuance and covenants — V09; срыв контракта → запасной финансовый маршрут — V02; реальные зарубежные CargoX/DTCC данные повышают планку новизны V03/V04, а не превращают их в мировые первые разработки.
+
+## V. Актуальная международная перепроверка 28.10.2026
+
+- **[DTCC официально запустила DTS](https://www.dtcc.com/press-releases/2026/dtcc-tokenization-service-goes-live)** 28 октября 2026 года. Нельзя писать, что создание токенизированного актива впервые ожидается в 2041; V04 — именно **legal rights mobility** и риск в рамках обязательств.
+- **[HKMA CargoX](https://www.hkma.gov.hk/eng/news-and-media/press-releases/2026/10/20261005-3)** — пилот одобрил **10 торгово-финансовых кредитов на HK$180 млн** к 05.10.2026. V03/V08 не претендуют на первый в мире кредит под торговые данные.
+- **[BIS Aperta](https://www.bis.org/project/aperta)** — завершённый PoC cross-border open finance; V05 не означает согласованный обмен KYC по всем странам.
+- **[BIS Agorá](https://www.bis.org/project/agora)** — реальные ограниченные тесты июля 2026, не универсальный production PvP/DvP; V07/V13 — отдельные допустимые коридоры и fallback.
+- **[BoE Digital Pound Lab](https://www.bankofengland.co.uk/the-digital-pound/lab)** — симуляции conditional B2B payments/DvP без реальных денег; V13 не утверждает беспрецедентности идеи.
+
+**Операционный источник для сравнения:** [26 публичных зарубежных сигналов](FRONTIER_2031_2041_GLOBAL_SIGNALS.md). **Исходная классификация 54 ФБС:** [полная исследовательская карта](FUTURE_FBS_54_2031_2041.md), 40/3/11 без изменений. **Все непроверенные банковские gates G1–G8:** [Issue #47](https://github.com/Podtverzhdeno/Research-Agents/issues/47). Редакционные Issues #37–#41 закрыты, а их история и контраргументы сохранены. **Нет** независимых подписей банка или доказанного ROI.
