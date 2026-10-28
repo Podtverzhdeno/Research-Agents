@@ -1,5 +1,7 @@
 # FUTURES_2031_2041_CANONICAL_RESOLUTION.md
 
+**Детальная аналитическая приёмка:** [13 бизнес-моделей с Q01–Q09, внешними G1–G8 и kill-tests](FUTURES_DECISION_2031_2041_CANONICAL.md) · [все 74 записи пяти финальных проходов и их ID](FUTURES_ID_CONCORDANCE_2031_2041.md) · [привязка к 54 исходным ФБС](FUTURES_FBS_54_CANONICAL_CROSSWALK.md). **Единственный OPEN внешний gate после дедупликации #45–#46 — [Issue #47](https://github.com/Podtverzhdeno/Research-Agents/issues/47).**
+
 ## Единственный навигатор по второму футуристическому итогу консилиума
 
 **28.10.2026 · EDITORIAL_RESEARCH_CLOSED / BANK_VALIDATION_OPEN / NOT_APPROVED_FOR_PRODUCTION.**
