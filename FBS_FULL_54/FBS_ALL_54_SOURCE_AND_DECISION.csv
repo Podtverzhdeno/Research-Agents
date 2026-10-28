@@ -30,7 +30,7 @@ code,name,source_status,source_original_idea,research_role,proposed_action,reaso
 "4.1.13.4","Кассовое обслуживание клиентов","Без изменений","—","0","БЕЗ ОТДЕЛЬНОЙ ИНВЕСТИЦИИ","","FBS_FULL_54/SYSTEM_4_PRODUCTS_PAYMENTS.md"
 "4.1.13.5","Экспертиза и инкассо наличных","Без изменений","—","0","БЕЗ ОТДЕЛЬНОЙ ИНВЕСТИЦИИ","","FBS_FULL_54/SYSTEM_4_PRODUCTS_PAYMENTS.md"
 "4.1.13.6.2","Ответственное хранение ценностей","Без изменений","—","0","БЕЗ ОТДЕЛЬНОЙ ИНВЕСТИЦИИ","","FBS_FULL_54/SYSTEM_4_PRODUCTS_PAYMENTS.md"
-"4.1.14.2","Эмиссия финансовых инструментов","Доработка","A2A contracting","B","АДАПТАЦИЯ ДЕЙСТВУЮЩЕЙ ФБС","","FBS_FULL_54/SYSTEM_4_PRODUCTS_PAYMENTS.md"
+"4.1.14.2","Эмиссия финансовых инструментов","Доработка","A2A contracting","B","СПОРНАЯ ПЕРВОНАЧАЛЬНАЯ ДОРАБОТКА","A2A contracting сам по себе не эмиссия; нужен выпуск реального финансового инструмента","FBS_FULL_54/SYSTEM_4_PRODUCTS_PAYMENTS.md"
 "4.1.14.4","Сделки с финансовыми инструментами","Доработка","A2A contracting","B","СЕГМЕНТНЫЙ CROSS-SELL","","FBS_FULL_54/SYSTEM_4_PRODUCTS_PAYMENTS.md"
 "4.1.22.2","Гарантии","Доработка","A2A contracting","P","ПРОДУКТ / ГАРАНТИЯ","","FBS_FULL_54/SYSTEM_4_PRODUCTS_PAYMENTS.md"
 "4.1.24","Эскроу","Доработка","A2A contracting","C","ОПЦИОНАЛЬНАЯ БАНКОВСКАЯ ВОЗМОЖНОСТЬ","","FBS_FULL_54/SYSTEM_4_PRODUCTS_PAYMENTS.md"
