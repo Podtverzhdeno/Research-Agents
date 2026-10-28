@@ -23,3 +23,17 @@ H1 — банковский лимит, расходуемый агентом к
 
 ## Независимая проверка
 Каждый новый claim должен содержать дату, URL, статус live/prototype/draft/marketing и контрпример. Не повышать уверенность от числа перепечаток одного пресс-релиза.
+
+
+## Дополнение Round 04 — контрсвидетельства рейтингу 28.10.2026
+
+| ID | Публичный первоисточник | Что источник действительно подтверждает | Что НЕ доказано для банка |
+|---|---|---|---|
+| **R4-01** | [RBI TReDS — официальный FAQ](https://www.rbi.org.in/scripts/FAQView.aspx/FAQView.aspx/FAQView.aspx?Id=132), 01.01.2020 | Уже реализованы buyer acceptance и торги банков/финансистов за подтверждённую дебиторку; TReDS не уникальный agentic banking | Что A2A-предложение повышает spread и risk-adjusted contribution банка |
+| **R4-02** | [AFP 2026 Treasury Benchmarking Survey](https://www.financialprofessionals.org/about/learn-more/press-releases/Details/afp-survey-ai-priorities-rise-across-treasury-teams-while-ai-related-challenges-grow), 15.09.2026 | 49% упоминают прогнозирование денежных потоков как challenging task; cash/liquidity top priority 63% | Willingness-to-pay, объём FX-спреда и прибыль именно Сбера от agentic treasury |
+| **R4-03** | [BoE/FCA AI Survey 2026](https://www.bankofengland.co.uk/report/2026/artificial-intelligence-in-uk-financial-services-2026), 26.10.2026 | В категориях широкая автономия агента пока редка (2% в выборке); 2031+ остается сценарием | Низкий спрос на агентные услуги в России в 2036 |
+| **R4-04** | [Google AP2 — agent authorization specification](https://github.com/google-agentic-commerce/AP2/blob/main/docs/ap2/agent_authorization.md) | Схемы делегирования и подтверждения мандата разрабатываются открыто, так что одних «мандатов» недостаточно для мировой новизны | Что AP2 обеспечивает юридические полномочия любого B2B юрлица в РФ |
+| **R4-05** | [ADB Global Trade Finance Gap Survey 2025](https://www.adb.org/publications/adb-global-trade-finance-gap-survey), декабрь 2025 | Оценка глобального неудовлетворённого спроса на trade finance — $2.5 трлн, финансирование остается большой проблемой | Что это российский TAM, адресуемый банком через A2A |
+| **R4-06** | [BIS Agenti](https://www.bis.org/node/87745), 14.10.2026 | Исследуется риск коррелированного поведения агентов в ликвидности wholesale payments | Что коррелированный агентный кризис уже наступил |
+
+**Использование для выбора:** [Round 04 challenger ranking](agents/gpt6-critical-review/ROUND_04_RANKING_CHALLENGE.md), [обсуждение #32](https://github.com/Podtverzhdeno/Research-Agents/issues/32). Отдельный источник может опровергнуть заявленную новизну, но сам по себе не доказывает сравнительную окупаемость альтернативы.
