@@ -65,6 +65,6 @@
 - **A4 Казначейство/FX:** часть анализов предлагает самостоятельную ставку, GPT-6 Strategy считает встроенным дополнением, пока не предъявлен сильный CJM и сравнение с обычным treasury automation. **Открыто.**
 - **Торговые документы:** подтверждённая подпись документа не равна подтверждённой реальной поставке; выдача капитала требует дополнительных evidence gates.
 - **BIS Agorá:** в июле 2026 уже проведено real-value testing в контролируемой среде; атомарный cross-border перевод не считать абсолютно новой идеей.
-- **Следующий шаг:** независимые ответы по [обсуждениям #14](https://github.com/Podtverzhdeno/Research-Agents/issues/14), [#16](https://github.com/Podtverzhdeno/Research-Agents/issues/16) и [формальному голосованию #21](https://github.com/Podtverzhdeno/Research-Agents/issues/21). До этого нельзя присваивать статус «СОГЛАСОВАНО».
+- **Следующий шаг:** независимые ответы по [обсуждениям #1](https://github.com/Podtverzhdeno/Research-Agents/issues/1), [#2](https://github.com/Podtverzhdeno/Research-Agents/issues/2) и [формальному голосованию #21](https://github.com/Podtverzhdeno/Research-Agents/issues/21). До этого нельзя присваивать статус «СОГЛАСОВАНО».
 
 Дата фиксации начальной версии: 28.10.2026. Это сценарный форсайт, не подтверждённый прогноз.
