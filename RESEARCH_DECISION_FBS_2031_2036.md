@@ -1,5 +1,8 @@
 # Итоговое исследовательское решение — агентная экономика 2031–2036 / ФБС
 
+**Полная предметная проработка всех ФБС:** [FBS_ALL_54_FULL_DECISIONS.md](FBS_ALL_54_FULL_DECISIONS.md) — **54 CJM и решения** с клиентской и банковской ценностью, ограничениями и метриками; [CSV для HTML и таблиц](FBS_FULL_54/FBS_ALL_54_SOURCE_AND_DECISION.csv). Подробные разделы: [2–3](FBS_FULL_54/SYSTEMS_2_3_CLIENT_AND_CHANNELS.md), [4](FBS_FULL_54/SYSTEM_4_PRODUCTS_PAYMENTS.md), [5–6](FBS_FULL_54/SYSTEMS_5_6_TECH_AND_DATA.md), [7](FBS_FULL_54/SYSTEM_7_BANK_OPERATIONS.md). Исходные 40/3/11 неизменны; это построчная работа, не новый инвестиционный approval.
+
+
 **Таблица 54 для прямого переноса в карту:** [FBS_54_READY_TO_IMPORT.md](FBS_54_READY_TO_IMPORT.md). 
 
 **Реализация формулировок для всех 54 ФБС:** [FBS_54_ACTIONABLE_COMPLETION.md](FBS_54_ACTIONABLE_COMPLETION.md), включая 39 за пределами условной группы core-15; каждый код содержит CJM, критерий проверки и ограничения. Канонический шорт-лист — только верхний слой этой карты, не её замена.
