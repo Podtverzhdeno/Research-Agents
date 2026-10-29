@@ -27,7 +27,7 @@ class TestV18Crosswalk(unittest.TestCase):
         self.cw[0]["reconciliation"]="?"
         self.assertTrue(any("substantive" in e for e in self.verify()))
     def test_special_no_change_reclassification_fails(self):
-        self.v17[26]["editorial_decision"]="ACCEPT_NO_SPECIAL_CHANGE"
+        self.v17[0]["editorial_decision"]="ACCEPT_NO_SPECIAL_CHANGE"
         self.assertTrue(self.verify())
 
 if __name__=="__main__":
