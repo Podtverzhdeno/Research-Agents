@@ -14,5 +14,16 @@ This folder contains a **fail-closed** session gate. Every one of the 54 FBS cod
 
 **Important security limitations:** A cryptographic signature proves that the holder of the trusted private key attested these logs, not that genuine discussion took place. External runtime/platform verification, review of substantive messages and trusted signing-key custody are mandatory. PR authors must **not** be able to replace trusted public keys or modify verifier code without independent protected review. Set branch protection / required checks in GitHub settings (not established by this PR). The CI gate is not technically mandatory until repository rules enforce it. Never equate one GitHub issue created_at with 54 completed sessions.
 
+
+## Дополнительные условия V18 / защита от ложного консенсуса
+
+- **Все 54 сессии разные.** У каждой уникальный `session_id`, подписанный `source_sha` должен совпадать с SHA256 зафиксированного CSV исходных 54 ФБС. Объект агента не заменяет это условие.
+- **Идёт именно дискуссия.** Каждая реально активная 15-минутная зона по всей продолжительности сессии, а не только первые 60 минут, должна содержать содержательные сообщения от обеих сторон и перекрёстные `reply_to_event_id` к другому агенту.
+- **Heartbeat не равен содержательной активности.** Время, отработанное реально, подтверждается отдельными аттестованными `active_intervals`, которые привязаны к подписанным runtime events; паузы вычитаются. Просто оставить приложение открытым на час недостаточно.
+- **Подпись не является независимым экспертным одобрением.** Ed25519 удостоверяет заявление держателя ключа, но внешний эксперт должен отдельно проверить provider logs, фактическое содержание переписки, непроизводность двух «агентов» от одного процесса и отсутствие подмены свидетельств. Две роли одного текстового диалога не дают `independent_agents=VERIFIED`.
+- **Бизнес-одобрение отдельно.** [54 редакционных вердикта](../DISCUSSIONS/CONSILIUM_V17_ALL_54_EDITORIAL_APPROVAL_REGISTER_20261030.csv) не подтверждают ни банк, ни production. [36 независимых E2E спецификаций](../DISCUSSIONS/CONSILIUM_V18_36_E2E_EXPECTATIONS_20261030.csv) всё ещё `NOT_EXECUTED`; [CI](../.github/workflows/consilium-gate.yml) проверяет только непротиворечивость спецификаций и защиту от ложного статуса.
+
+**Текущее положение:** `editorial-integrity=PASS`; `consilium-time-gate=FAIL CLOSED` до появления подлинных журналов, защищённой доверенной подписи и независимой семантической экспертизы. Не отключать второй gate ради зелёного CI.
+
 ## Current status
 All 54 are `NOT_STARTED` in the registry. No signed authentic telemetry has been provided, so `SESSION_NOT_VERIFIED` and any attempt to merge as `COMPLETED` must be rejected. The research/editorial document is useful before this process, but does not claim to satisfy it.
