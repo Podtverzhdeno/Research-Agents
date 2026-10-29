@@ -5,6 +5,7 @@ on:
       - "DISCUSSIONS/**"
       - "consilium/**"
       - "tests/test_editorial_v16.py"
+      - "tests/test_research_approval_integrity.py"
       - "tests/test_consilium_gate.py"
       - ".github/workflows/consilium-gate.yml"
   workflow_dispatch:
@@ -22,6 +23,10 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_editorial_v16.py' -v
       - name: Verify all fifty-four editorial decisions against original codes
         run: python -m consilium.validate_editorial_v16
+      - name: Verify all 54 explicit editorial approvals and reject fake bank signoffs
+        run: |
+          python -m unittest discover -s tests -p 'test_research_approval_integrity.py' -v
+          python -m consilium.verify_research_approvals
   consilium-time-gate:
     runs-on: ubuntu-latest
     permissions:
