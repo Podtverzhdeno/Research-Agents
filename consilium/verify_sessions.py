@@ -158,24 +158,53 @@ def check_session(record, public_key, expected_code, expected_source_sha=None):
         demand(agent_events[0][1]["kind"] == "START" and abs((agent_events[0][0] - start).total_seconds()) <= 60, f"{actor}: no start witness")
         demand(agent_events[-1][1]["kind"] == "END" and abs((end - agent_events[-1][0]).total_seconds()) <= 60, f"{actor}: no end witness")
         demand(all((y[0] - x[0]).total_seconds() <= MAX_GAP_SEC for x, y in zip(agent_events, agent_events[1:])), f"{actor}: unverified activity gap")
-        for slot in range(math.ceil(wall / WINDOW_SEC)):
+
+        # Heartbeats and elapsed wall time are NOT evidence of 60 active minutes.
+        # The trusted runtime must explicitly attest every unpaused active interval
+        # and bind its endpoints to actual signed runtime events.
+        intervals = agents_by_id[actor].get("active_intervals", [])
+        demand(isinstance(intervals, list) and bool(intervals), f"{actor}: missing signed active intervals")
+        accepted = []
+        if isinstance(intervals, list):
+            for interval in intervals:
+                try:
+                    if not isinstance(interval, dict):
+                        raise ValueError("interval must be object")
+                    a, b = utc(interval["start_utc"]), utc(interval["end_utc"])
+                    demand(start <= a < b <= end, f"{actor}: invalid active interval boundaries")
+                    demand(interval.get("provenance") == "TRUSTED_RUNTIME_TELEMETRY", f"{actor}: missing runtime provenance")
+                    demand(str(interval.get("evidence_url", "")).startswith("https://"), f"{actor}: missing runtime evidence URL")
+                    start_witness = [at for at, ev in agent_events if ev.get("runtime_event_id") == interval.get("start_runtime_event_id")]
+                    end_witness = [at for at, ev in agent_events if ev.get("runtime_event_id") == interval.get("end_runtime_event_id")]
+                    demand(any(abs((at - a).total_seconds()) <= 60 for at in start_witness), f"{actor}: missing active interval start event")
+                    demand(any(abs((at - b).total_seconds()) <= 60 for at in end_witness), f"{actor}: missing active interval end event")
+                    for pa, pb in pauses:
+                        demand(b <= pa or a >= pb, f"{actor}: active interval overlaps pause")
+                    if start <= a < b <= end:
+                        accepted.append((a, b))
+                except (KeyError, TypeError, ValueError, AttributeError):
+                    errors.append(f"{actor}: malformed active interval")
+        accepted.sort()
+        for i in range(1, len(accepted)):
+            demand(accepted[i][0] >= accepted[i - 1][1], f"{actor}: overlapping active intervals")
+        observed_seconds = sum((b - a).total_seconds() for a, b in accepted)
+        demand(observed_seconds >= MIN_SEC, f"{actor}: less than 3600 attested active seconds")
+        demand(abs(observed_seconds - active) <= 1, f"{actor}: active telemetry does not cover all unpaused time")
+
+        # Every active 15-minute window across the WHOLE session is reviewed,
+        # not just the first four windows of a possibly longer session.
+        for slot in range(int((wall + WINDOW_SEC - 1) // WINDOW_SEC)):
             lower = start + dt.timedelta(seconds=slot * WINDOW_SEC)
-            upper = min(end, start + dt.timedelta(seconds=(slot + 1) * WINDOW_SEC))
-            active_window = (upper - lower).total_seconds()
-            active_window -= sum(max(0, (min(b, upper) - max(a, lower)).total_seconds()) for a, b in pauses)
-            if active_window < 300:
+            upper = min(end, lower + dt.timedelta(seconds=WINDOW_SEC))
+            if not any(max(lower, a) < min(upper, b) for a, b in accepted):
                 continue
-            substantive = [ev for at, ev in agent_events if lower <= at < upper and ev["kind"] == "MESSAGE" and ev.get("substantive_review") is True]
-            demand(bool(substantive), f"{actor}: no substantive exchange in 15min window {slot + 1}")
-            if actor == sorted(by_agent)[0]:
-                cross_replies = [
-                    ev for ev in events if isinstance(ev, dict) and ev.get("kind") == "MESSAGE"
-                    and ev.get("reply_to_event_id") in by_event_id
-                    and by_event_id[ev["reply_to_event_id"]][1].get("kind") == "MESSAGE"
-                    and by_event_id[ev["reply_to_event_id"]][1].get("agent_id") != ev.get("agent_id")
-                    and lower <= utc(ev["server_time_utc"]) < upper
-                ]
-                demand(bool(cross_replies), f"no peer discussion/replies in 15min window {slot + 1}")
+            substantive = [
+                ev for at, ev in agent_events
+                if lower <= at < upper and ev["kind"] == "MESSAGE"
+                and ev.get("substantive_review") is True
+                and any(a <= at <= b for a, b in accepted)
+            ]
+            demand(bool(substantive), f"{actor}: no substantive exchange in active 15min window {slot + 1}")
     for gate in GATES:
         demand(record.get("quality_gates", {}).get(gate) is True, f"quality gate failed: {gate}")
     return errors
