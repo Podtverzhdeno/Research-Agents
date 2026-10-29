@@ -14,7 +14,7 @@ def working_session(sk, wall=3600):
     events = []
     for actor in ("a", "b"):
         for second in range(0, wall + 1, 300):
-            kind = "START" if second == 0 else ("END" if second == wall else ("MESSAGE" if second % 900 == 0 else "HEARTBEAT"))
+            kind = "START" if second == 0 else ("END" if second == wall else ("MESSAGE" if second % 900 == 300 else "HEARTBEAT"))
             ev = {"event_id": f"{actor}-{second}", "agent_id": actor, "runtime_event_id": f"runtime-{actor}-{second}",
                   "server_time_utc": stamp(second), "kind": kind}
             if kind == "MESSAGE":
