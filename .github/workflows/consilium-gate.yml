@@ -1,12 +1,27 @@
-name: Consilium V2 time and evidence gate
+name: Consilium V16 editorial and real-session gates
 on:
   pull_request:
     paths:
       - "DISCUSSIONS/**"
       - "consilium/**"
+      - "tests/test_editorial_v16.py"
+      - "tests/test_consilium_gate.py"
       - ".github/workflows/consilium-gate.yml"
   workflow_dispatch:
 jobs:
+  editorial-integrity:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run eight falsification tests for editorial ledger
+        run: python -m unittest discover -s tests -p 'test_editorial_v16.py' -v
+      - name: Verify all fifty-four editorial decisions against original codes
+        run: python -m consilium.validate_editorial_v16
   consilium-time-gate:
     runs-on: ubuntu-latest
     permissions:
