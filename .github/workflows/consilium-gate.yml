@@ -9,6 +9,7 @@ on:
       - "tests/test_consilium_gate.py"
       - "tests/test_bank_cases.py"
       - "tests/test_reconciliation_v18.py"
+      - "tests/test_reference_bank_invariants.py"
       - ".github/workflows/consilium-gate.yml"
   workflow_dispatch:
 jobs:
@@ -33,6 +34,8 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_bank_cases.py' -v
           python -m consilium.verify_bank_cases
+      - name: Run 25 deterministic reference-control tests (NOT bank E2E)
+        run: python -m unittest discover -s tests -p 'test_reference_bank_invariants.py' -v
       - name: Verify V3/V17 crosswalk for all 54 FBS
         run: |
           python -m unittest discover -s tests -p 'test_reconciliation_v18.py' -v
