@@ -73,6 +73,8 @@ def audit(session):
                 "argument", "counterargument", "revision", "negative_test"):
                 continue
             try:
+                if start is None:
+                    continue
                 offset = (parse_utc(event.get("server_timestamp_utc")) - start).total_seconds()
                 if i * WINDOW_SECONDS <= offset < (i + 1) * WINDOW_SECONDS:
                     found = True
