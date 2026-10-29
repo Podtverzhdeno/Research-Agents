@@ -62,7 +62,7 @@ def check_session(record, public_key, expected_code):
             signature = base64.b64decode(record["signature_b64"], validate=True)
             public_key.verify(signature, signed_payload(record))
         except (InvalidSignature, ValueError, TypeError):
-            errors.append("invalid signed orchestrator attestation")
+            errors.append("invalid signature: signed orchestrator attestation")
 
     try:
         start, end = utc(record.get("started_at_utc")), utc(record.get("ended_at_utc"))
