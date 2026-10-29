@@ -147,7 +147,7 @@ def check_session(record, public_key, expected_code, expected_source_sha=None):
     for event_id, (at, ev) in by_event_id.items():
         if ev.get("kind") != "MESSAGE" or not ev.get("reply_to_event_id"):
             continue
-        ref_event = by_event_id.get(ev["reply_to_event_id"])
+        ref_event = by_event_id.get(ev["reply_to_event_id"]) if isinstance(ev.get("reply_to_event_id"), str) else None
         demand(ref_event is not None and ref_event[1].get("kind") == "MESSAGE" and ref_event[1].get("agent_id") != ev.get("agent_id") and ref_event[0] <= at,
                f"{event_id}: invalid or non-peer reply reference")
     for actor, agent_events in by_agent.items():
@@ -205,6 +205,19 @@ def check_session(record, public_key, expected_code, expected_source_sha=None):
                 and any(a <= at <= b for a, b in accepted)
             ]
             demand(bool(substantive), f"{actor}: no substantive exchange in active 15min window {slot + 1}")
+            if actor == sorted(by_agent)[0]:
+                peer_replies = [
+                    ev for (at, ev) in by_event_id.values()
+                    if lower <= at < upper and ev.get("kind") == "MESSAGE"
+                    and ev.get("substantive_review") is True
+                    and isinstance(ev.get("reply_to_event_id"), str)
+                    and ev["reply_to_event_id"] in by_event_id
+                    and by_event_id[ev["reply_to_event_id"]][1].get("kind") == "MESSAGE"
+                    and by_event_id[ev["reply_to_event_id"]][1].get("agent_id") != ev.get("agent_id")
+                    and by_event_id[ev["reply_to_event_id"]][0] <= at
+                ]
+                demand(bool(peer_replies), f"no peer discussion/replies in active 15min window {slot + 1}")
+
     for gate in GATES:
         demand(record.get("quality_gates", {}).get(gate) is True, f"quality gate failed: {gate}")
     return errors
