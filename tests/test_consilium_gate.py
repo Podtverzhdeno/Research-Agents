@@ -29,6 +29,15 @@ def working_session(sk, wall=3600):
               "agents": [{"agent_id": "a", "runtime_id": "rA", "role": "risk"},
                          {"agent_id": "b", "runtime_id": "rB", "role": "product"}],
               "events": events, "pause_intervals": [], "quality_gates": {g: True for g in GATES}}
+    for agent in record["agents"]:
+        actor = agent["agent_id"]
+        agent["active_intervals"] = [{
+            "start_utc": stamp(0), "end_utc": stamp(wall),
+            "provenance": "TRUSTED_RUNTIME_TELEMETRY",
+            "evidence_url": "https://example.org/independent-runtime-attestation",
+            "start_runtime_event_id": f"runtime-{actor}-0",
+            "end_runtime_event_id": f"runtime-{actor}-{wall}",
+        }]
     return seal(record, sk)
 
 def seal(record, sk):
@@ -77,6 +86,58 @@ class TimeGateTests(unittest.TestCase):
         record["agents"][1]["runtime_id"] = "rA"
         seal(record, self.private)
         self.assertTrue(any("independent" in e for e in self.check(record)))
+
+    def test_heartbeat_without_active_telemetry_fails(self):
+        record = working_session(self.private)
+        record["agents"][0]["active_intervals"] = []
+        seal(record, self.private)
+        self.assertTrue(any("missing signed active intervals" in e for e in self.check(record)))
+
+    def test_unproven_runtime_interval_fails(self):
+        record = working_session(self.private)
+        record["agents"][0]["active_intervals"][0]["evidence_url"] = ""
+        seal(record, self.private)
+        self.assertTrue(any("runtime evidence" in e for e in self.check(record)))
+
+    def test_idle_tail_not_counted_as_active(self):
+        record = working_session(self.private, wall=4200)
+        for agent in record["agents"]:
+            agent["active_intervals"][0]["end_utc"] = stamp(3600)
+            agent["active_intervals"][0]["end_runtime_event_id"] = f"runtime-{agent['agent_id']}-3600"
+        seal(record, self.private)
+        self.assertTrue(any("telemetry does not cover" in e for e in self.check(record)))
+
+    def test_missing_later_substantive_windows_fails(self):
+        record = working_session(self.private, wall=7200)
+        for ev in record["events"]:
+            at = dt.datetime.fromisoformat(ev["server_time_utc"].replace("Z", "+00:00"))
+            if (at - START).total_seconds() >= 3600 and ev["kind"] == "MESSAGE":
+                ev["kind"] = "HEARTBEAT"
+                ev.pop("content_sha256", None)
+                ev.pop("evidence_url", None)
+                ev.pop("substantive_review", None)
+        seal(record, self.private)
+        self.assertTrue(any("active 15min window 5" in e for e in self.check(record)))
+
+    def test_valid_paused_session_with_active_65_minutes(self):
+        record = working_session(self.private, wall=4500)
+        record["pause_intervals"] = [{"start": stamp(1500), "end": stamp(2100)}]
+        for agent in record["agents"]:
+            actor = agent["agent_id"]
+            agent["active_intervals"] = [
+                {"start_utc": stamp(0), "end_utc": stamp(1500),
+                 "provenance": "TRUSTED_RUNTIME_TELEMETRY",
+                 "evidence_url": "https://example.org/audit",
+                 "start_runtime_event_id": f"runtime-{actor}-0",
+                 "end_runtime_event_id": f"runtime-{actor}-1500"},
+                {"start_utc": stamp(2100), "end_utc": stamp(4500),
+                 "provenance": "TRUSTED_RUNTIME_TELEMETRY",
+                 "evidence_url": "https://example.org/audit",
+                 "start_runtime_event_id": f"runtime-{actor}-2100",
+                 "end_runtime_event_id": f"runtime-{actor}-4500"},
+            ]
+        seal(record, self.private)
+        self.assertEqual(self.check(record), [])
 
     def test_synthetic_100_rounds_without_wall_time_fails(self):
         record = working_session(self.private, wall=300)
