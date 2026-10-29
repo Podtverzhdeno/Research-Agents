@@ -44,7 +44,7 @@ class EditorialTests(unittest.TestCase):
     def test_short_or_missing_veto_is_rejected(self):
         rows,codes=fixture()
         rows[8]["veto"]="okay"
-        self.assertTrue(any("veto" in e for e in validate(rows,codes,FIELDS)))
+        self.assertTrue(any("kill test" in e or "challenger" in e for e in validate(rows,codes,FIELDS)))
 
     def test_source_order_change_is_rejected(self):
         rows,codes=fixture()
