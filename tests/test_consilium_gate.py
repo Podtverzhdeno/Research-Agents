@@ -13,7 +13,7 @@ def stamp(n):
 def working_session(sk, wall=3600):
     events = []
     for actor in ("a", "b"):
-        for second in range(0, wall + 1, 300):
+        for second in sorted(set(range(0, wall, 300)) | {wall}):
             kind = "START" if second == 0 else ("END" if second == wall else ("MESSAGE" if second % 900 == 300 else "HEARTBEAT"))
             ev = {"event_id": f"{actor}-{second}", "agent_id": actor, "runtime_event_id": f"runtime-{actor}-{second}",
                   "server_time_utc": stamp(second), "kind": kind}
@@ -43,7 +43,7 @@ class TimeGateTests(unittest.TestCase):
         self.assertEqual(self.check(working_session(self.private)), [])
 
     def test_fifty_nine_minutes_fails(self):
-        self.assertTrue(any("3600" in e for e in self.check(working_session(self.private, wall=3300))))
+        self.assertTrue(any("3600" in e for e in self.check(working_session(self.private, wall=3599))))
 
     def test_forged_timestamp_fails_signature(self):
         record = working_session(self.private)
