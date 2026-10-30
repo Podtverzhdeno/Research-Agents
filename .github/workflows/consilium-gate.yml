@@ -1,0 +1,51 @@
+name: Consilium V16 editorial and real-session gates
+on:
+  pull_request:  # All PRs: source CSV, workflow, docs and code cannot evade the gate.
+  workflow_dispatch:
+jobs:
+  editorial-integrity:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run eight falsification tests for editorial ledger
+        run: python -m unittest discover -s tests -p 'test_editorial_v16.py' -v
+      - name: Verify all fifty-four editorial decisions against original codes
+        run: python -m consilium.validate_editorial_v16
+      - name: Verify all 54 explicit editorial approvals and reject fake bank signoffs
+        run: |
+          python -m unittest discover -s tests -p 'test_research_approval_integrity.py' -v
+          python -m consilium.verify_research_approvals
+      - name: Verify 36 bank acceptance scenarios without manufacturing E2E results
+        run: |
+          python -m unittest discover -s tests -p 'test_bank_cases.py' -v
+          python -m consilium.verify_bank_cases
+      - name: Run 25 deterministic reference-control tests (NOT bank E2E)
+        run: python -m unittest discover -s tests -p 'test_reference_bank_invariants.py' -v
+      - name: Verify V3/V17 crosswalk for all 54 FBS
+        run: |
+          python -m unittest discover -s tests -p 'test_reconciliation_v18.py' -v
+          python -m consilium.verify_reconciliation_v18
+  consilium-time-gate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install signature verifier
+        run: python -m pip install cryptography
+      - name: Run negative and happy-path structural tests
+        run: python -m unittest discover -s tests -p 'test_consilium_gate.py' -v
+      - name: Require trusted 54-session evidence (fail closed)
+        run: |
+          python -m consilium.verify_sessions \
+            --source FBS_FULL_54/FBS_ALL_54_SOURCE_AND_DECISION.csv \
+            --sessions consilium/session_registry.json \
+            --trusted-pubkey consilium/trusted_orchestrator_ed25519.pub
